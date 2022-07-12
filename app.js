@@ -1,12 +1,4 @@
 import express from 'express'
-import moment from 'moment'
-/* import productManager, { getAllProducts, getProductById } from './managers/productManager.js' */
-
-/* import './managers/productManager.js' */
-
-/* import productManager from './managers/productManager.js' */
-/* 
-const ProductManager = require('./managers/productManager.js') */
 
 import productManager from './managers/productManager.js'
 const productService = new productManager()
@@ -34,7 +26,12 @@ const server = app.listen(PORT, ()=>{
 })
 
 app.get('/', (req, res)=>{
-    res.send('<h1>Bienvenidos al servidor</h1>')
+    res.send(`<h1>Bienvenidos al servidor</h1>
+    <br>
+    <h3>Opciones: </h3>
+    <h3>1. /productos</h3>
+    <h3>2. /productoRandom</h3>
+    `)
 })
 
 app.get('/productos', async(req, res)=>{
@@ -59,26 +56,4 @@ app.get('/productoRandom', async(req, res)=>{
     } catch (error) {
         console.log(error)
     }
-})
-
-app.get('/papa', (req, res)=>{
-    res.send('Estas en la ruta papa')
-})
-
-app.get('/vistas', (req, res)=>{
-    counter++
-    res.send(`El endpoint se ha visitado ${counter} veces`)
-})
-
-app.get('/fyh', (req, res)=>{
-    let currentTime = moment()
-    res.send(currentTime.format('DD/MM/YYYY hh:mm:ss'))
-})
-
-app.get('/info', (req, res)=>{
-    let role = req.query.role
-    if(!role) return res.send('No se envió un rol')
-    if(role !=='admin') return res.send('Informacion no accesible')
-    res.send(`aqui esta toda la info ${req.query}`)
-    res.send(role)
 })
