@@ -5,7 +5,6 @@ const productService = new productManager()
 
 const app = express()
 const PORT = 8080
-let counter = 0
 
 function createHTMLString(productlist){
     let string=''
@@ -24,6 +23,9 @@ function createHTMLString(productlist){
 const server = app.listen(PORT, ()=>{
     console.log(`Listening on PORT ${PORT}`)
 })
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 
 app.get('/', (req, res)=>{
     res.send(`<h1>Bienvenidos al servidor</h1>
@@ -32,6 +34,18 @@ app.get('/', (req, res)=>{
     <h3>1. /productos</h3>
     <h3>2. /productoRandom</h3>
     `)
+})
+
+app.get('/producto/:id', async(req,res)=>{
+    try {
+        let id= parseInt(req.params.id)
+        console.log(id)
+        let producto = await productService.getProductById(id)
+        res.send(createHTMLString([ producto]))
+    } catch (error) {
+        console.log(error)
+    }
+    
 })
 
 app.get('/productos', async(req, res)=>{

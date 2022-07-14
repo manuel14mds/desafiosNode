@@ -48,7 +48,7 @@ class productManager{
             }
             return product
         } catch (error) {
-            console.log(error)
+            console.log('getProductById',error)
         }
     }
 
